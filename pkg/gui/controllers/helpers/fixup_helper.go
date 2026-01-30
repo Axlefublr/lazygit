@@ -53,11 +53,9 @@ func (self *FixupHelper) HandleFindBaseCommitForFixupPress() error {
 	commits := self.c.Model().Commits
 
 	var hashes []string
-	warnAboutAddedLines := false
 
 	if len(deletedLineHunks) > 0 {
 		hashes, err = self.blameDeletedLines(deletedLineHunks)
-		warnAboutAddedLines = len(addedLineHunks) > 0
 	} else if len(addedLineHunks) > 0 {
 		hashes, err = self.blameAddedLines(commits, addedLineHunks)
 	} else {
@@ -129,7 +127,7 @@ func (self *FixupHelper) HandleFindBaseCommitForFixupPress() error {
 	// Now we know that foundCommits has exactly one commit, so find its index
 	_, index, _ := self.findCommit(commits, foundCommits[0].Hash())
 
-	return self.c.ConfirmIf(warnAboutAddedLines, types.ConfirmOpts{
+	return self.c.ConfirmIf(false, types.ConfirmOpts{
 		Title:  self.c.Tr.FindBaseCommitForFixup,
 		Prompt: self.c.Tr.HunksWithOnlyAddedLinesWarning,
 		HandleConfirm: func() error {
