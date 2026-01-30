@@ -615,7 +615,7 @@ func (self *BranchesController) delete(branches []*models.Branch) error {
 
 	deleteBothItem := &types.MenuItem{
 		Label: lo.Ternary(len(branches) > 1, self.c.Tr.DeleteLocalAndRemoteBranches, self.c.Tr.DeleteLocalAndRemoteBranch),
-		Keys:  menuKey('b'),
+		Keys:  menuKey('o'),
 		OnPress: func() error {
 			return self.localAndRemoteDelete(branches)
 		},
