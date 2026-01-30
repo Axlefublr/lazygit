@@ -1590,7 +1590,7 @@ func (self *LocalCommitsController) squashFixupCommits() error {
 				Label:          self.c.Tr.SquashCommitsInCurrentBranch,
 				OnPress:        self.squashAllFixupsInCurrentBranch,
 				DisabledReason: self.canFindCommitForSquashFixupsInCurrentBranch(),
-				Keys:           menuKey('b'),
+				Keys:           menuKey('i'),
 				Tooltip:        self.c.Tr.SquashCommitsInCurrentBranchTooltip,
 			},
 			{
