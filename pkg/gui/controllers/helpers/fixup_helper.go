@@ -101,14 +101,12 @@ func (self *FixupHelper) HandleFindBaseCommitForFixupPress() error {
 		return errors.New(self.c.Tr.BaseCommitIsNotInCurrentView)
 	}
 
-	if len(hashGroups[NOT_MERGED]) == 0 {
-		// If all the commits are merged, show the "already on main branch"
-		// error. It isn't worth doing a detailed report of which commits we
-		// found.
-		return errors.New(self.c.Tr.BaseCommitIsAlreadyOnMainBranch)
+	hashGroup := hashGroups[NOT_MERGED]
+	if len(hashGroup) == 0 {
+		hashGroup = hashGroups[MERGED]
 	}
 
-	foundCommits := getCommitsForHashes(commits, hashGroups[NOT_MERGED])
+	foundCommits := getCommitsForHashes(commits, hashGroup)
 	// If there are multiple commits that could be the base commit, remove all
 	// those that are fixups for the last one.
 	foundCommits = removeFixupCommits(foundCommits)
