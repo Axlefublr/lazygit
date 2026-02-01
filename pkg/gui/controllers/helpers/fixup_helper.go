@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"regexp"
+	"slices"
 	"strings"
 
 	"github.com/jesseduffield/generics/set"
@@ -403,6 +404,30 @@ func IsFixupCommit(subject string) (string, bool) {
 		}
 		return subject, true
 	}
-
 	return subject, false
+}
+
+// FindFixupBaseCommit will search commits (oldest first) to find a matching
+// commit for the given subject. It expects the subject to be already trimmed,
+// as if it were returned from [IsFixupCommit].
+//
+// It also returns whether the commit message has an exact match to the target base commit.
+// If no matches are found, it returns nil.
+func FindFixupBaseCommit(subject string, commits []*models.Commit) (model *models.Commit, exact bool) {
+	var fallback *models.Commit
+	for _, commit := range slices.Backward(commits) {
+		candidateSubject, _, _ := strings.Cut(commit.Name, "\n")
+		if strings.HasPrefix(commit.Hash(), subject) {
+			return commit, true
+		}
+
+		if subject == candidateSubject {
+			return commit, true
+		}
+
+		if fallback == nil && strings.HasPrefix(candidateSubject, subject) {
+			fallback = commit
+		}
+	}
+	return fallback, false
 }
