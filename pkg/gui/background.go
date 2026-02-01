@@ -89,9 +89,10 @@ func (self *BackgroundRoutineMgr) startBackgroundFetch() {
 			return nil
 		})
 
-		return self.gui.helpers.AppStatus.WithWaitingStatusImpl(self.gui.Tr.FetchingStatus, func(gocui.Task) error {
-			return self.backgroundFetch()
-		}, nil)
+		return self.backgroundFetch()
+		// return self.gui.helpers.AppStatus.WithWaitingStatusImpl(self.gui.Tr.FetchingStatus, func(gocui.Task) error {
+		// 	return self.backgroundFetch()
+		// }, nil)
 	}
 
 	// We want an immediate fetch at startup, and since goEvery starts by
