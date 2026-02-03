@@ -592,11 +592,11 @@ func (v *View) setCharacter(x, y int, ch string, fgColor, bgColor Attribute) {
 	}
 
 	if matched, selected := v.isPatternMatchedRune(x, y); matched {
-		fgColor = ColorBlack
+		fgColor = NewRGBColor(31, 30, 30) | AttrBold
 		if selected {
-			bgColor = ColorCyan
+			bgColor = NewRGBColor(181, 140, 198)
 		} else {
-			bgColor = ColorYellow
+			bgColor = NewRGBColor(228, 145, 178)
 		}
 	}
 
