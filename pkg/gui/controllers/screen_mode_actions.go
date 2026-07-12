@@ -12,7 +12,7 @@ type ScreenModeActions struct {
 func (self *ScreenModeActions) Next() error {
 	self.c.State().GetRepoState().SetScreenMode(
 		nextIntInCycle(
-			[]types.ScreenMode{types.SCREEN_NORMAL, types.SCREEN_HALF, types.SCREEN_FULL},
+			[]types.ScreenMode{types.SCREEN_NORMAL, types.SCREEN_FULL},
 			self.c.State().GetRepoState().GetScreenMode(),
 		),
 	)
